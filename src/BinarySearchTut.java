@@ -12,10 +12,10 @@ public class BinarySearchTut {
         // System.out.println(findKRotation(new int[]{1,2,3,4,5},5));
         // System.out.println(findOnce(new int[]{1,1,2,2,3,3,4,50,50,65,65},11));
         // System.out.println(peakElement(new int[]{1,2,3},3));
-        // System.out.println(floorSqrt(10));
+        // System.out.println(floorSqrt(2));
         // System.out.println(NthRoot(3,126));
         // System.out.println(Solve(5, new int[] { 30, 11, 23, 4, 20 }, 6));
-        // System.out.println(solve(3,2,new int[]{1, 10, 3, 10, 2}));
+        System.out.println(solve(3,2,new int[]{1, 10, 3, 10, 2}));
         // System.out.println(smallestDivisor(new int[]{1,2,5,9},6));
         // System.out.println(leastWeightCapacity(new int[]{1,2,1},3,2));
         // System.out.println(KthMissingElement(new int[]{32,59,77},3,1));
@@ -25,7 +25,7 @@ public class BinarySearchTut {
         // 10, 20 }));
         // System.out.println(kthElement(new int[] { 5, 8, 9, 11, 11 },
         // new int[] { 4, 6, 8, 9, 11, 13 }, 5, 6, 10));
-        int[][] arr = { { 18, 21, 27, 38, 55, 67 } };
+        // int[][] arr = { { 18, 21, 27, 38, 55, 67 } };
         // System.out.println(rowWithMax1s(arr, 4, 4));
         // System.out.println(matSearch(arr, 1, 6, 55));
         int[][] mat = {
@@ -35,7 +35,7 @@ public class BinarySearchTut {
             {3, 2, 14, 15, 33},
             {39, 36, 13, 46, 42}
         };
-        System.out.println(Arrays.toString(findPeakGrid(mat)));
+        // System.out.println(Arrays.toString(findPeakGrid(mat)));
     }
 
     public static int bs(int[] arr, int k) {
@@ -257,6 +257,7 @@ public class BinarySearchTut {
 
     public static int findMin(int A[], int n) {
         // 9 10 1 2 3 4 5 // 3 4 5 9 10 1 2
+        // in th sorted half take the minimum , and move to the other side 
         int l = 0;
         int h = A.length - 1;
         int minEle = Integer.MAX_VALUE;
@@ -307,7 +308,7 @@ public class BinarySearchTut {
         // 1,1,2,3,3 // 1,1,2,2,3 // 1,2,2,3,3
         if (n == 1)
             return arr[0];
-        if (arr[0] != arr[1])
+        if(arr[0] != arr[1])
             return arr[0];
         if (arr[n - 1] != arr[n - 2]) {
             return arr[n - 1];
@@ -319,14 +320,26 @@ public class BinarySearchTut {
             if (arr[mid] != arr[mid - 1] && arr[mid] != arr[mid + 1]) {
                 return arr[mid];
             }
-            if (mid % 2 != 0 && arr[mid] == arr[mid - 1]) { // odd index
-                l = mid + 1;
-                continue;
+            if(mid % 2 != 0){
+                if ( arr[mid] == arr[mid-1]) { // odd index 
+                    l = mid + 1;
+                    continue;
+                }
+                if (arr[mid] == arr[mid+1]) {
+                    h = mid - 1;
+                    continue;
+                }
+            }else{// (even,odd)  -- left (odd,even)
+                if ( arr[mid] == arr[mid+1]) { // odd index 
+                    l = mid + 1;
+                    continue;
+                }
+                if (arr[mid] == arr[mid-1]) {
+                    h = mid - 1;
+                    continue;
+                }
             }
-            if (mid % 2 != 0 && arr[mid] == arr[mid + 1]) {
-                h = mid - 1;
-                continue;
-            }
+            
         }
         return 0;
     }
@@ -462,13 +475,10 @@ public class BinarySearchTut {
                         bouqC++;
                         count = 0;
                     }
-                } else {
+                } else {  //cuz we need k adjacent flowers
                     count = 0;
                 }
             }
-            // if (bouqC == M) {
-            // return mid;
-            // } else
             if (bouqC < M) {
                 low = mid + 1;
             } else { // bouqC >= M
@@ -663,35 +673,67 @@ public class BinarySearchTut {
         return numberOfPainters;
     }
 
-    public static double findSmallestMaxDist(int stations[], int K) {
+    public static double findSmallestMaxDist(int arr[], int k) {
         // Minimize Max Distance to Gas Station --
         // https://www.geeksforgeeks.org/problems/minimize-max-distance-to-gas-station/1
         // station - [1,13,17,23] ____ howMany- [_,1,0,0] -> [_,1,0,1];
         // --------------------- Brute Force -------
-        Arrays.sort(stations);
-        int[] howMany = new int[stations.length];
-        for (int i = 1; i <= K; i++) {
-            int maxVal = -1;
-            int maxIndex = -1;
-            for (int j = 1; j < howMany.length; j++) {
-                int diff = stations[j] - stations[j - 1];
-                int sectionLength = (diff / (howMany[j] + 1));
-                if (maxVal < sectionLength) {
-                    maxVal = sectionLength;
-                    maxIndex = j;
-                }
-            }
-            howMany[maxIndex] += 1;
-        }
-        double maxAns = -1;
-        for (int i = 1; i < howMany.length; i++) {
-            double dist = (double) (stations[i] - stations[i - 1]) / (howMany[i] + 1);
-            maxAns = Math.max(maxAns, dist);
-        }
-        return maxAns;
+        // Arrays.sort(stations);
+        // int[] howMany = new int[stations.length];
+        // for (int i = 1; i <= K; i++) {
+        //     int maxVal = -1;
+        //     int maxIndex = -1;
+        //     for (int j = 1; j < howMany.length; j++) {
+        //         int diff = stations[j] - stations[j - 1];
+        //         int sectionLength = (diff / (howMany[j] + 1));
+        //         if (maxVal < sectionLength) {
+        //             maxVal = sectionLength;
+        //             maxIndex = j;
+        //         }
+        //     }
+        //     howMany[maxIndex] += 1;
+        // }
+        // double maxAns = -1;
+        // for (int i = 1; i < howMany.length; i++) {
+        //     double dist = (double) (stations[i] - stations[i - 1]) / (howMany[i] + 1);
+        //     maxAns = Math.max(maxAns, dist);
+        // }
+        // return maxAns;
         //
-    }
+        int n = arr.length; // size of the array
+        double low = 0;
+        double high = 0;
 
+        //Find the maximum distance:
+        for (int i = 0; i < n - 1; i++) {
+            high = Math.max(high, (double)(arr[i + 1] - arr[i]));
+        }
+
+        //Apply Binary search:
+        double diff = 1e-6 ;
+        while (high - low > diff) {
+            double mid = (low + high) / (2.0);
+            int cnt = numberOfGasStationsRequired(mid, arr);
+            if (cnt > k) {
+                low = mid;
+            } else {
+                high = mid;
+            }
+        }
+        return high;
+    }
+    public static int numberOfGasStationsRequired(double dist, int[] arr) {
+        int n = arr.length; // size of the array
+        int cnt = 0;
+        for (int i = 1; i < n; i++) {
+            int numberInBetween = (int)((arr[i] - arr[i - 1]) / dist);
+            if ((arr[i] - arr[i - 1]) == (dist * numberInBetween)) {
+                numberInBetween--;
+            }
+            cnt += numberInBetween;
+        }
+        return cnt;
+    }
     public static double medianOfArrays(int n, int m, int a[], int b[]) {
         // https://www.geeksforgeeks.org/problems/median-of-2-sorted-arrays-of-different-sizes/1
 
@@ -842,21 +884,38 @@ public class BinarySearchTut {
     public static int matSearch(int mat[][], int N, int M, int X) {
         // https://www.geeksforgeeks.org/problems/search-in-a-matrix17201720/1 ---
         // Search in a 2D matrix
-        for (int i = 0; i < mat.length; i++) {
-            if (mat[i][0] <= X && X <= mat[i][M - 1]) {
-                // binary search
-                int low = 0;
-                int high = M - 1;
-                while (low <= high) {
-                    int mid = low + (high - low) / 2;
-                    if (mat[i][mid] == X) {
-                        return 1;
-                    } else if (mat[i][mid] > X) {
-                        high = mid - 1;
-                    } else {
-                        low = mid + 1;
-                    }
-                }
+        // for (int i = 0; i < mat.length; i++) {
+        //     if (mat[i][0] <= X && X <= mat[i][M - 1]) {
+        //         // binary search
+        //         int low = 0;
+        //         int high = M - 1;
+        //         while (low <= high) {
+        //             int mid = low + (high - low) / 2;
+        //             if (mat[i][mid] == X) {
+        //                 return 1;
+        //             } else if (mat[i][mid] > X) {
+        //                 high = mid - 1;
+        //             } else {
+        //                 low = mid + 1;
+        //             }
+        //         }
+        //     }
+        // }
+        // return 0;
+
+        // optimized 
+        int low = 0;
+        int high = N * M - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int row = mid / M;
+            int col = mid % M;
+            if (mat[row][col] == X) {
+                return 1;
+            } else if (mat[row][col] > X) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
             }
         }
         return 0;
@@ -877,6 +936,7 @@ public class BinarySearchTut {
         int high = n - 1;
         while (low <= high) {
             int mid = low + (high - low) / 2; // column
+            //find max cell along the row 
             int max = 0;
             int maxIdx = -1;
             for (int i = 0; i < m; i++) {
@@ -885,6 +945,7 @@ public class BinarySearchTut {
                     maxIdx = i;
                 }
             }
+            
             int left = (mid - 1) < 0 ? -1 : mat[maxIdx][mid - 1];
             int right = (mid + 1) >= n ? -1 : mat[maxIdx][mid + 1];
             if (mat[maxIdx][mid] > left && mat[maxIdx][mid] > right) {
@@ -895,6 +956,6 @@ public class BinarySearchTut {
                 low = mid + 1;
             }
         }
-        return new int[]{0,0};
+        return new int[] { 0, 0 };
     }
 }

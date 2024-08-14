@@ -52,15 +52,21 @@ public class RecursionTut {
         // }
         // ArrayList<ArrayList<Integer>> a = combinationSum3(3,7);
         // for (int i = 0; i < a.size(); i++) {
-        //     for (int j = 0; j < a.get(i).size(); j++) {
-        //         System.out.print(a.get(i).get(j) + " ");
-        //     }
-        //     System.out.println();
+        // for (int j = 0; j < a.get(i).size(); j++) {
+        // System.out.print(a.get(i).get(j) + " ");
         // }
-        List<String> ls = find_permutation("ABC");
-        for (String item : ls) {
-            System.out.println(item);
-        }
+        // System.out.println();
+        // }
+        // List<String> ls = find_permutation("ABC");
+        // for (String item : ls) {
+        // System.out.println(item);
+        // }
+        char[][] board = {
+                { 'A', 'B', 'C', 'E' },
+                { 'S', 'F', 'C', 'S' },
+                { 'A', 'D', 'E', 'E' }
+        };
+        System.out.println(exist(board, "ABCCED"));
     }
 
     public static int atoi(String s) {
@@ -115,6 +121,22 @@ public class RecursionTut {
         if (R % 2 == 1)
             result = (N * result) % 1000000007;
         return result;
+    }
+
+    public static int countGoodNumbers(long n) {
+        int count = helper(n, 0);
+        return count;
+    }
+
+    public static int helper(long n, long pt) {
+        if (pt == n) {
+            return 1;
+        }
+        if (pt % 2 == 0) {
+            return 5 * helper(n, pt + 1);
+        } else {
+            return 4 * helper(n, pt + 1);
+        }
     }
 
     public static Stack<Integer> sort(Stack<Integer> s) {
@@ -181,6 +203,7 @@ public class RecursionTut {
         s = s + "0";
         generateBinary(s, ls, n);
         s = s.substring(0, s.length() - 1);
+        // which do not contain consecutive 1s.
         if (s.length() != 0 && s.charAt(s.length() - 1) == '1') {
             return;
         }
@@ -197,6 +220,8 @@ public class RecursionTut {
     }
 
     public static void generateParen(List<String> ls, int n, int countParen, String st, int count) {
+        // count denotes each ( and ) ... if >0 more ( ... if <0 more ) .. if 0 balanced
+        // .... countParen denotes each ()
         if (countParen > n)
             return;
         if (countParen == n && count == 0) {
@@ -511,7 +536,7 @@ public class RecursionTut {
     public static ArrayList<ArrayList<Integer>> combinationSum3(int K, int N) {
         ArrayList<ArrayList<Integer>> lol = new ArrayList<>();
         ArrayList<Integer> a = new ArrayList<>();
-        combSum3(lol,a,K,N,1);
+        combSum3(lol, a, K, N, 1);
         return lol;
     }
 
@@ -532,19 +557,20 @@ public class RecursionTut {
     }
 
     public static List<String> letterCombinations(String digits) {
-        // Letter Combinations of a Phone Number -- https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/
+        // Letter Combinations of a Phone Number --
+        // https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/
         List<String> ls = new ArrayList<>();
         HashMap<Integer, char[]> map = new HashMap<>();
-        map.put(2, new char[]{'a', 'b', 'c'});
-        map.put(3, new char[]{'d', 'e', 'f'});
-        map.put(4, new char[]{'g', 'h', 'i'});
-        map.put(5, new char[]{'j', 'k', 'l'});
-        map.put(6, new char[]{'m', 'n', 'o'});
-        map.put(7, new char[]{'p', 'q', 'r' ,'s'});
-        map.put(8, new char[]{'t', 'u', 'v'});
-        map.put(9, new char[]{'w', 'x', 'y','z'});
-        phNoComb(ls,map,"",digits,0);
-        if(digits.equals("")){
+        map.put(2, new char[] { 'a', 'b', 'c' });
+        map.put(3, new char[] { 'd', 'e', 'f' });
+        map.put(4, new char[] { 'g', 'h', 'i' });
+        map.put(5, new char[] { 'j', 'k', 'l' });
+        map.put(6, new char[] { 'm', 'n', 'o' });
+        map.put(7, new char[] { 'p', 'q', 'r', 's' });
+        map.put(8, new char[] { 't', 'u', 'v' });
+        map.put(9, new char[] { 'w', 'x', 'y', 'z' });
+        phNoComb(ls, map, "", digits, 0);
+        if (digits.equals("")) {
             ls.remove(0);
         }
         return ls;
@@ -565,6 +591,36 @@ public class RecursionTut {
             phNoComb(ls, map, temp, digits, index + 1);
             temp = temp.substring(0, temp.length() - 1);
         }
+    }
+
+    public List<List<String>> partition(String s) {
+        var res = new ArrayList<List<String>>();
+        dfs(s.toCharArray(), 0, res, new ArrayList<>());
+        return res;
+    }
+
+    private void dfs(char[] s, int start, List<List<String>> res, List<String> cur) {
+        if (s.length == start) {
+            res.add(new ArrayList<>(cur));
+            return;
+        }
+        for (int i = start; i < s.length; i++) {
+            if (isP(s, start, i)) {
+                cur.add(new String(s, start, i - start + 1));
+                dfs(s, i + 1, res, cur);
+                cur.removeLast();
+            }
+        }
+    }
+
+    private boolean isP(char[] s, int start, int end) {
+        int len = end - start + 1;
+        for (int i = 0; i < len / 2; i++) {
+            if (s[start + i] != s[start + len - 1 - i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static List<String> find_permutation(String S) {
@@ -600,31 +656,71 @@ public class RecursionTut {
 
         }
     }
+
     private void recurPermute(int index, int[] nums, List<List<Integer>> ans) {
-        if(index == nums.length) {
+        if (index == nums.length) {
             // copy the ds to ans
             List<Integer> ds = new ArrayList<>();
-            for(int i = 0;i<nums.length;i++) {
-                ds.add(nums[i]); 
+            for (int i = 0; i < nums.length; i++) {
+                ds.add(nums[i]);
             }
-            ans.add(new ArrayList<>(ds)); 
-            return; 
+            ans.add(new ArrayList<>(ds));
+            return;
         }
-        for(int i = index;i<nums.length;i++) {
-            swap(i, index, nums); 
-            recurPermute(index+1, nums, ans); 
-            swap(i, index, nums); 
+        for (int i = index; i < nums.length; i++) {
+            swap(i, index, nums);
+            recurPermute(index + 1, nums, ans);
+            swap(i, index, nums);
         }
     }
+
     private void swap(int i, int j, int[] nums) {
-        int t = nums[i]; 
-        nums[i] = nums[j]; 
+        int t = nums[i];
+        nums[i] = nums[j];
         nums[j] = t;
     }
+
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>(); 
+        List<List<Integer>> ans = new ArrayList<>();
         recurPermute(0, nums, ans);
-        return ans; 
+        return ans;
     }
-    
+
+    public static boolean exist(char[][] board, String word) {
+        int rowLen = board.length;
+        int colLen = board[0].length;
+        for (int i = 0; i < rowLen; i++) {
+            for (int j = 0; j < colLen; j++) {
+                if (searchWord(board, word, i, j, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean searchWord(char[][] board, String word, int i, int j, int index) {
+        if (index == word.length()) {
+            return true;
+        }
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length
+                || board[i][j] != word.charAt(index)) {
+            return false;
+        }
+
+        char temp = board[i][j];
+        board[i][j] = '*'; // Mark the cell as visited
+        // Explore the four neighboring directions: right, down, left, up
+        int[][] offsets = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
+        for (int[] offset : offsets) {
+            int newRow = i + offset[0];
+            int newCol = j + offset[1];
+            if (searchWord(board, word, newRow, newCol, index + 1)) {
+                return true;
+            }
+        }
+        board[i][j] = temp; // Restore the cell's original value
+        return false;
+    }
+
 }

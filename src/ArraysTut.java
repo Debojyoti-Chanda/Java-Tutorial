@@ -29,6 +29,7 @@ public class ArraysTut {
         // System.out.println(findLongestConseqSubseq(new int[]{0,1,1,2,8,9,10,11},8));
         // int[][] array = { { 0, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1,
         // 1 } };
+        System.out.println(findSubArraySum(new int[]{3,-3,1,1,1},5,0));
         // makeZeros(array);
         // comb(2, 2);
         // System.out.println(findTriplets(new int[]{-2,-2,-2,-1,-1,-1,0,0,0,2,2,2,2}));
@@ -36,8 +37,8 @@ public class ArraysTut {
         // {1000000000,1000000000,1000000000,1000000000}, -294967296);
         // System.out.println(a);
         // System.out.println(maxSubarrayXOR(new int[] { 1, 2, 3, 4 }));
-        int[][] array = { { 1, 3 }, { 2, 4 }, { 2, 3 }, { 6, 8 }, { 8, 10 } };
-        System.out.println(overlappedInterval(array));
+        // int[][] array = { { 1, 3 }, { 2, 4 }, { 2, 3 }, { 6, 8 }, { 8, 10 } };
+        // System.out.println(overlappedInterval(array));
         // test(null);
         // sc.close();
     }
@@ -354,7 +355,7 @@ public class ArraysTut {
 
     public static int longestSubArraywithSumK(int[] arr, int k) {
         // https://www.geeksforgeeks.org/problems/longest-sub-array-with-sum-k0809/1
-        // Optimal for integers
+        // Optimal for +ve and -ve integers
         // int sum = 0;
         // int len = 0;
         // HashMap<Integer, Integer> map = new HashMap<>();
@@ -372,7 +373,7 @@ public class ArraysTut {
         // }
         // return len;
         // -----------------------------Optimization ---------------- 2 pointer approach
-        // Optimal if the array contains only whole numbers
+        // Optimal if the array contains only +ve numbers
         int backPtr = 0;
         int frontPtr = 0;
         int sum = arr[0];
