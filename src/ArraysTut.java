@@ -215,17 +215,16 @@ public class ArraysTut {
         // [1,2,0,3]
         // int zeroPtr = -1;
         // for (int i = 0; i < arr.length; i++) {
-        // if (arr[i] == 0) {
-        // zeroPtr = i;
-        // for (int j = i + 1; j < arr.length; j++) {
-        // if (arr[j] != 0) {
-        // int temp = arr[j];
-        // arr[j] = arr[zeroPtr];
-        // arr[zeroPtr] = temp;
-        // break;
-        // }
-        // }
-        // zeroPtr++;
+        //      if (arr[i] == 0) {
+        //      zeroPtr = i;
+        //      for (int j = i + 1; j < arr.length; j++) {
+        //          if (arr[j] != 0) {
+        //              int temp = arr[j];
+        //              arr[j] = arr[zeroPtr];
+        //              arr[zeroPtr] = temp;
+        //              break;
+        //          }
+        //      }
         // }
 
         // }
@@ -360,16 +359,16 @@ public class ArraysTut {
         // int len = 0;
         // HashMap<Integer, Integer> map = new HashMap<>();
         // for (int i = 0; i < arr.length; i++) {
-        // sum += arr[i];
-        // if (sum == k) {
-        // len = Math.max(i+1, len);
-        // }
-        // if (map.containsKey(sum - k)) {
-        // len = Math.max(len, i - map.get(sum - k));
-        // }
-        // if (!map.containsKey(sum)) {
-        // map.put(sum, i);
-        // }
+        //      sum += arr[i];
+        //      if (sum == k) {
+        //          len = Math.max(i+1, len);
+        //      }
+        //      if (map.containsKey(sum - k)) {
+        //          len = Math.max(len, i - map.get(sum - k));
+        //      }
+        //      if (!map.containsKey(sum)) {
+        //          map.put(sum, i);
+        //      }
         // }
         // return len;
         // -----------------------------Optimization ---------------- 2 pointer approach
@@ -400,21 +399,21 @@ public class ArraysTut {
 
         // HashMap<Integer,Integer> map = new HashMap<>();
         // for (int i = 0; i < arr.length; i++) {
-        // if (map.get(arr[i]) == null) {
-        // map.put(arr[i], 1);
-        // } else {
-        // map.put(arr[i], map.get(arr[i])+1);
-        // }
+        //      if (map.get(arr[i]) == null) {
+        //          map.put(arr[i], 1);
+        //      } else {
+        //          map.put(arr[i], map.get(arr[i])+1);
+        //      }
 
         // }
         // for (int i = 0; i < arr.length; i++) {
-        // if(map.containsKey(x-arr[i])){
-        // if(arr[i] == x-arr[i] && map.get(x-arr[i]) == 1){
-        // return false;
-        // }else{
-        // return true;
-        // }
-        // }
+        //      if(map.containsKey(x-arr[i])){
+        //          if(arr[i] == x-arr[i] && map.get(x-arr[i]) == 1){
+        //              return false;
+        //          }else{
+        //              return true;
+        //          }
+        //      }
         // }
         // return false;
 
@@ -437,14 +436,14 @@ public class ArraysTut {
     public static int[] sortArrayOf012(int[] arr) {
         // https://www.geeksforgeeks.org/problems/sort-an-array-of-0s-1s-and-2s4231/1
         // most optimal solution ---> Dutch national Flag Algorithm
-        // 0-> [0,low-1] 1-> [low..mid-1] 2 -> [high+1,n-1];
+        // 0-> [0,low-1] 1-> [low..mid-1] 0/1/2 ->[mid,high] 2 -> [high+1,n-1];
         int low = 0, high = arr.length - 1, mid = 0;
         for (int i = 0; i < arr.length; i++) {
             if (arr[mid] == 0) {
                 // swap arr[low],arr[mid]
                 int temp = arr[low];
                 arr[low] = arr[mid];
-                arr[mid] = temp;
+                arr[mid] = temp; 
                 low++;
                 mid++;
             } else if (arr[mid] == 1) {
@@ -906,19 +905,19 @@ public class ArraysTut {
         int n = arr.length;
         HashSet<ArrayList<Integer>> set = new HashSet<>();
         // for (int i = 0; i < n; i++) {
-        // HashMap<Integer, Integer> hash = new HashMap<>();
-        // for (int j = i + 1; j < n; j++) {
-        // if (hash.containsKey(-(arr[i] + arr[j]))) {
-        // ArrayList<Integer> a = new ArrayList<>();
-        // a.add(arr[i]);
-        // a.add(arr[j]);
-        // int rem = -arr[i] - arr[j];
-        // a.add(rem);
-        // Collections.sort(a);
-        // set.add(a);
-        // }
-        // hash.put(arr[j], j);
-        // }
+        //      HashMap<Integer, Integer> hash = new HashMap<>();
+        //      for (int j = i + 1; j < n; j++) {
+        //          if (hash.containsKey(-(arr[i] + arr[j]))) {
+        //              ArrayList<Integer> a = new ArrayList<>();
+        //              a.add(arr[i]);
+        //              a.add(arr[j]);
+        //              int rem = -arr[i] - arr[j];
+        //              a.add(rem);
+        //              Collections.sort(a);
+        //              set.add(a);
+        //          }
+        //          hash.put(arr[j], j);
+        //      }
         // }
         // --------------------------------------- Optimization-----------------
         Arrays.sort(arr);
@@ -1023,12 +1022,12 @@ public class ArraysTut {
         int n = arr.length;
         // int max = Arrays.stream(arr).max().getAsInt();
         // for (int i = 0; i < n; i++) {
-        // int val = arr[i];
-        // for (int j = i+1; j < n; j++) {
-        // val = val ^ arr[j];
-        // max = Math.max(val, max);
-        // }
-        // }
+        //      int val = arr[i];
+        //      for (int j = i+1; j < n; j++) {
+        //          val = val ^ arr[j];
+        //          max = Math.max(val, max);
+        //      }
+        //  }
         // return max;
         // ------------------------------------------Optimization
         // -----------------------------------

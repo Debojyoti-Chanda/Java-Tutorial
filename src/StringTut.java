@@ -12,7 +12,7 @@ public class StringTut {
         // System.out.println(expandFromCenter("aba", 0, 0));
         // System.out.println(reverseWords("i.like.this.program.very.much"));
         // System.out.println(beautySum("aaac"));
-        System.out.println(exact_k_chars("abcdaabb",3));
+        // System.out.println(exact_k_chars("abcdaabb",3));
 
     }
 
@@ -409,8 +409,6 @@ public class StringTut {
         }
         return sum;
         // Optimized
-        
-        
     }
 
 }
